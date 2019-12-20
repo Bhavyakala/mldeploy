@@ -2,6 +2,8 @@ let mobilenet;
 let model;
 const webcam = new Webcam(document.getElementById('wc'));
 
+const dataset = new RPSDataset();
+
 async function loadMobilenet(){
 	const mobilenet = await tf.loadLayersModel('https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json');
 	const layer = mobilenet.getLayer('conv_pw_13_relu');
