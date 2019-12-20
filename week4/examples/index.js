@@ -11,12 +11,26 @@ async function loadMobilenet(){
 }
 
 async function train(){
+	dataset.ys = null;
+	dataset.encodeLabels(3);
 	model = tf.sequential({
 		layers: [
 			tf.layers.flatten({inputShape: mobilenet.output[0].shape.slice(1)}),
 			tf.layers.dense({units: 100 , activation: 'relu'}),
 			tf.layers.dense({units: 3 , activation: 'softmax'})
 		]
+	});
+	const optimizer = tf.train.adam(0.001);
+	model.compile({optimiser: optimizer , loss: 'categoricalCrossentropy'});
+	let loss = 0;
+	model.fit(dataset.ex , dataset.ys ,{
+		epochs: 10,
+		callbacks: {
+			onBatchEnd: async (batch , logs) => {
+				loss = logs.loss.toFixed(5);
+				console.log('LOSS: ' + loss);
+			}
+		}
 	});
 }
 
@@ -40,10 +54,47 @@ function handleButton(elem){
 	dataset.addExample(mobilenet.predict(img) , label);
 }
 
+function startPredicting(){
+	isPredending = true;
+	predict();
+}
+
+function stopPredicting(){
+	isPredending = false;
+	predict();
+}
+
 async function init(){
 	await webcam.setup();
 	mobilenet = await loadMobilenet();
 	tf.tidy(() => mobilenet.predict(webcam.capture()));
+}
+
+while(isPredending){
+	const predictedClass = tf.tidy(() => {
+		const img = webcam.capture();
+		const activation = mobilenet.predict(img);
+		const predictions = model.predict(activation);
+		return Predictions.as1D().argMax();
+	});
+
+	const classId = (await predictedClass.data())[0];
+	var predictionText = "";
+	switch(classId){
+		case 0:
+			predictionText = "i see rock";
+			break;
+		case 1:
+			predictionText = "i see paper";
+			break;
+		case 2:
+			predictionText = "i see Scissors"
+			break;
+	}
+	document.getElementById("prediction").innerText = predictionText;
+
+	predictedClass.dispose();
+	await tf.nextFrame();
 }
 
 init();
