@@ -6,9 +6,21 @@
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
   <!-- Load the coco-ssd model. -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+  <!-- Load React. -->
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+  <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
 </head>
 <body>
 	<h1>Object detection web app using COCO SSD pretrained model in tensorflow.js</h1>
-	<script src="detect.js"></script>
+	<!-- Load our React component. -->
+  <script src="detect.js" type="text/babel"></script>
+
+  <!-- We will put our React component inside this div. -->
+  <div id="root">
+  	
+
+  </div>
 </body>
 </html>
