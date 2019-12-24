@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>COCO SSD</title>
-	<!-- Load TensorFlow.js-->
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <meta charset="UTF-8" />
+  <title>TensorFlow.js OBD Demo</title>
+  <!-- Load TensorFlow.js-->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
   <!-- Load the coco-ssd model. -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
   <!-- Load React. -->
@@ -12,15 +14,14 @@
 
   <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
 </head>
+
 <body>
-	<h1>Object detection web app using COCO SSD pretrained model in tensorflow.js</h1>
-	<!-- Load our React component. -->
+
+  <h1>Demo of TensorFlow.js Coco SSD's model object detection</h1>
+  <!-- Load our React component. -->
   <script src="detect.js" type="text/babel"></script>
 
   <!-- We will put our React component inside this div. -->
-  <div id="root">
-  	
-
-  </div>
+  <div id="root"></div>
+  
 </body>
-</html>
